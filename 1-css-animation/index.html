@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Animated List</title>
+<style>
+    /* styles.css */
+    li {
+        overflow: hidden;
+        padding: 8px 16px;
+        margin: 2px;
+        background-color: #f0f0f0;
+        list-style-type: none;
+        transition: transform 0.5s, opacity 0.5s;
+        transform-origin: top;
+    }
+
+    .animate-add {
+        animation: addAnimation 0.5s forwards;
+    }
+
+    .animate-remove {
+        animation: removeAnimation 0.5s forwards;
+    }
+
+    @keyframes addAnimation {
+        from {
+            transform: scaleY(0);
+            opacity: 0;
+        }
+        to {
+            transform: scaleY(1);
+            opacity: 1;
+        }
+    }
+
+    @keyframes removeAnimation {
+        
+        from {
+            transform: scaleY(1);
+            opacity: 1;
+        }
+        to {
+            transform: scaleY(0);
+            opacity: 0;
+        }
+    }
+
+</style>
+</head>
+<body>
+    <button id="add">Add Item</button>
+    <button id="remove">Remove Item</button>
+    <ul id="list">
+        <li class="animate-add">Item 1</li> <!-- Example item -->
+    </ul>
+    <script>
+        // script.js
+        document.getElementById('add').addEventListener('click', function() {
+            const list = document.getElementById('list');
+            const newItem = document.createElement('li');
+            newItem.textContent = 'New Item';
+            newItem.classList.add('animate-add');
+            list.appendChild(newItem);
+        });
+
+        document.getElementById('remove').addEventListener('click', function() {
+            const list = document.getElementById('list');
+            if (list.children.length > 0) {
+                const lastItem = list.children[list.children.length - 1];
+                lastItem.classList.add('animate-remove');
+                lastItem.addEventListener('animationend', function() {
+                    lastItem.remove();
+                });
+            }
+        });
+    </script>
+</body>
+</html>
